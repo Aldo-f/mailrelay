@@ -1,0 +1,20 @@
+services:
+  mailrelay:
+    image: crazymax/msmtpd:latest
+    container_name: mailrelay
+    restart: unless-stopped
+    env_file:
+      - .env
+    networks:
+      - mailrelay
+    volumes:
+      - mailrelay-logs:/var/log/msmtpd
+    # NOTE: No ports: block — internal only, never exposed to host.
+
+networks:
+  mailrelay:
+    driver: bridge
+    name: mailrelay
+
+volumes:
+  mailrelay-logs:
